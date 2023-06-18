@@ -29,7 +29,7 @@ jobs:
           python -m pytest -v tests
       - name: Build coverage file
         run: |
-          pytest --cov=myproj --cov-report=html tests/
+          pytest --cov=. --cov-report=html tests/
       - name: Update Readme with Coverage Html
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |

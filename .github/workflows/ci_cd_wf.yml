@@ -27,3 +27,16 @@ jobs:
       - name: Run tests
         run: |
           python -m pytest -v tests
+      - name: Build coverage file
+        run: |
+          pytest --cov=. --cov-report=html tests/
+      - name: Update Readme with Coverage Html
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          sed -i 's#<\!-- COVERAGE_HTML -->#<a href="htmlcov/index.html">Coverage HTML Report</a>#' README.md
+      - name: Commit & Push changes to Readme
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: actions-js/push@master
+        with:
+            message: Update coverage on Readme
+            github_token: ${{ secrets.MY_TOKEN }}
